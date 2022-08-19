@@ -8,5 +8,6 @@ router.get('/courses' ,auth, manageCourseController.getCoursesController.getCour
 router.post('/addCourse',auth, manageCourseController.addCourseController.addCourse)
 router.post('/deleteCourse',auth, manageCourseController.deleteCourseController.deleteCourseById)
 router.post('/updateCourse',auth, manageCourseController.updateCourseController.updateCourseById)
+router.post('/addCourseToCart',auth, manageCourseController.addCourseToCart.addCourseToCart)
 
 module.exports = router;

@@ -1,5 +1,7 @@
 
+const Cart = require("../../models/cart")
 const Course = require("../../models/course")
+
 
 const getCoursesController = {
     async getCourses(req, res, next) {
@@ -120,12 +122,12 @@ const updateCourseController = {
 
         try {
             if (req.user.role == "admin") {
-                await Course.findByIdAndUpdate(req.body.courseId,{
-                    courseName:req.body.courseName,
-                    courseDescription:req.body.courseDescription,
-                    courseImage:req.body.courseImage,
-                    courseLike:req.body.courseLike,
-                    courseDislike:req.body.courseDislike
+                await Course.findByIdAndUpdate(req.body.courseId, {
+                    courseName: req.body.courseName,
+                    courseDescription: req.body.courseDescription,
+                    courseImage: req.body.courseImage,
+                    courseLike: req.body.courseLike,
+                    courseDislike: req.body.courseDislike
                 }).then(ress => {
                     console.log("update course in database successfulley ", ress)
                     res.status(200).json({
@@ -151,4 +153,41 @@ const updateCourseController = {
 
 }
 
-module.exports = { getCoursesController, addCourseController, deleteCourseController,updateCourseController };
+const addCourseToCart = {
+    async addCourseToCart(req, res, next) {
+        console.log("add course to cart contoller")
+        console.log("add course contoller", req.body)
+        const {  courseId,courseName, courseDescription, courseImage } = req.body;
+        const cart = new Cart({
+            courseId, courseName, courseDescription, courseImage
+        })
+        try {
+            
+                await cart.save().then(ress => {
+                    console.log("add course in cart in database successfulley ", ress)
+                    res.status(200).json({
+                        success: 'add course in cart in Database successfully ......',
+                    })
+                }).catch(ress => {
+                    console.log("add  course in cart database failled ", ress)
+                    res.status(500).json({
+                        error: 'add  course in cart Database unsuccessful error in db ......',
+                    })
+                });
+
+            
+
+        } catch (err) {
+            return res.status(500).json({
+                error: 'add course in cart in Database unsuccessful error in db catch ......',
+            })
+        }
+    }
+}
+
+const deleteCourseFromCart = {
+
+}
+
+module.exports = { getCoursesController, addCourseController,
+     deleteCourseController, updateCourseController, addCourseToCart ,deleteCourseFromCart };
