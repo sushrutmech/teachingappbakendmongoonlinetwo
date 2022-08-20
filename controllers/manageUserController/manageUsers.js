@@ -28,7 +28,7 @@ const getUserController = {
 
                 })
             }
-            res.json(user);
+          res.json(user);
 
 
 

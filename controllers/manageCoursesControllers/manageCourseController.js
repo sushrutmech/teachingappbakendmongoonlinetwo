@@ -157,25 +157,25 @@ const addCourseToCart = {
     async addCourseToCart(req, res, next) {
         console.log("add course to cart contoller")
         console.log("add course contoller", req.body)
-        const {  courseId,courseName, courseDescription, courseImage } = req.body;
+        const { courseId, courseName, courseDescription, courseImage } = req.body;
         const cart = new Cart({
             courseId, courseName, courseDescription, courseImage
         })
         try {
-            
-                await cart.save().then(ress => {
-                    console.log("add course in cart in database successfulley ", ress)
-                    res.status(200).json({
-                        success: 'add course in cart in Database successfully ......',
-                    })
-                }).catch(ress => {
-                    console.log("add  course in cart database failled ", ress)
-                    res.status(500).json({
-                        error: 'add  course in cart Database unsuccessful error in db ......',
-                    })
-                });
 
-            
+            await cart.save().then(ress => {
+                console.log("add course in cart in database successfulley ", ress)
+                res.status(200).json({
+                    success: 'add course in cart in Database successfully ......',
+                })
+            }).catch(ress => {
+                console.log("add  course in cart database failled ", ress)
+                res.status(500).json({
+                    error: 'add  course in cart Database unsuccessful error in db ......',
+                })
+            });
+
+
 
         } catch (err) {
             return res.status(500).json({
@@ -186,8 +186,35 @@ const addCourseToCart = {
 }
 
 const deleteCourseFromCart = {
+    async deleteCourseFromCart(req, res, next) {
+        console.log("delete course from cart contoller")
+        console.log("delete course from cart  contoller", req.body)
+        const { courseId, courseName, courseDescription, courseImage } = req.body;
+
+        try {
+
+            await Cart.findByIdAndDelete(courseId).then(ress => {
+                console.log("delete course from cart in database successfulley ", ress)
+                res.status(200).json({
+                    success: 'delete course from cart in Database successfully ......',
+                })
+            }).catch(ress => {
+                console.log("delete course from cart in database failled ", ress)
+                res.status(500).json({
+                    error: 'delete course from cart in Database unsuccessful error in db ......',
+                })
+            });
+
+        } catch (err) {
+            return res.status(500).json({
+                error: 'delete course from cart in Database unsuccessful error in db catch ......',
+            })
+        }
+    }
 
 }
 
-module.exports = { getCoursesController, addCourseController,
-     deleteCourseController, updateCourseController, addCourseToCart ,deleteCourseFromCart };
+module.exports = {
+    getCoursesController, addCourseController,
+    deleteCourseController, updateCourseController, addCourseToCart, deleteCourseFromCart
+};

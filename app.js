@@ -7,6 +7,7 @@ const mainRouter = require('./api/route/main');
 const authRouter = require("./api/route/auth");
 const manageUserRouter = require("./api/route/manageUser");
 const manageCourseRouter = require("./api/route/manageCourse");
+const commentsRouter = require("./api/route/comment");
 
 var url = "mongodb://localhost:27017/mydb2";
 
@@ -27,6 +28,7 @@ app.use('/main' , mainRouter);
 app.use('/auth' , authRouter);
 app.use('/users',manageUserRouter);
 app.use('/course',manageCourseRouter);
+app.use('/conversation',commentsRouter);
 
 app.use('/' , (req , res ,next )=>{
     
