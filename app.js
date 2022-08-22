@@ -1,5 +1,5 @@
 const express = require('express');
-
+const router = express.Router();
 const app = express();
 const bodyParser = require('body-Parser');
 var mongoose = require('mongoose');
@@ -8,6 +8,8 @@ const authRouter = require("./api/route/auth");
 const manageUserRouter = require("./api/route/manageUser");
 const manageCourseRouter = require("./api/route/manageCourse");
 const commentsRouter = require("./api/route/comment");
+var cors = require('cors');
+
 
 var url = "mongodb://localhost:27017/mydb2";
 
@@ -24,6 +26,22 @@ db.once('open', () => {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
+app.use(cors())
+router.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*")
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader( "Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS" ); 
+   });
+
+// app.use(function(req,res,next){
+//   res.header("Access-Control-Allow-Origin" ,'*');
+//   res.header("Access-Control-Allow-Headers" ,'Origin, X-Requested-With, Content-Type, Accept');
+//   res.setHeader( "Access-Control-Allow-Methods", "*" );
+//   next();
+// })
+
 app.use('/main' , mainRouter);
 app.use('/auth' , authRouter);
 app.use('/users',manageUserRouter);

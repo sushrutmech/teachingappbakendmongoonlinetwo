@@ -8,10 +8,7 @@ const getAllCommentController = {
         try {
             await Comment.find({}).select('-__v').then(ress => {
                 console.log("get all comments database successfulley ",)
-                res.status(200).json({
-                    success: 'get all comments database successfulley...',
-                    commentList: ress
-                })
+                res.status(200).send(ress) 
             }).catch(ress => {
                 console.log("get all comments database failled ", ress)
                 res.status(500).json({
@@ -66,29 +63,46 @@ const updateCommentController = {
     async updateCommentById(req, res, next) {
 
         console.log("update comment contoller", req.body)
-        const {ID , body}=req.body
+        const {Id , body}=req.body
+        console.log("id ff", Id)
 
-        try {
-
-            await Comment.findByIdAndUpdate(ID, {
-                body: body,
-            }).then(ress => {
-                console.log("update comment in database successfulley ", ress)
-                res.status(200).json({
-                    success: 'update comment in Database successfully ......',
-                })
-            }).catch(ress => {
-                console.log("update comment in database failled ", ress)
-                res.status(500).json({
-                    error: 'update comment in database unsuccessful error in db ......',
-                })
-            });
-
-        } catch (err) {
-            return res.status(500).json({
-                error: 'update course in Database unsuccessful error in db catch ......',
+        Comment.findByIdAndUpdate(Id, {
+            body: body,
+        }).then(ress => {
+            console.log("update comment in database successfulley ", ress)
+            res.status(200).json({
+                success: 'update comment in Database successfully ......',
+                response:ress
             })
-        }
+        }).catch(ress => {
+            console.log("update comment in database failled ", ress)
+            res.status(500).json({
+                error: 'update comment in database unsuccessful error in db ......',
+            })
+        });
+
+        // try {
+
+        //     await Comment.findByIdAndUpdate(ID, {
+        //         body: body,
+        //     }).then(ress => {
+        //         console.log("update comment in database successfulley ", ress)
+        //         res.status(200).json({
+        //             success: 'update comment in Database successfully ......',
+        //             response:ress
+        //         })
+        //     }).catch(ress => {
+        //         console.log("update comment in database failled ", ress)
+        //         res.status(500).json({
+        //             error: 'update comment in database unsuccessful error in db ......',
+        //         })
+        //     });
+
+        // } catch (err) {
+        //     return res.status(500).json({
+        //         error: 'update course in Database unsuccessful error in db catch ......',
+        //     })
+        // }
 
     }
 
