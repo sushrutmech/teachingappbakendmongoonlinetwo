@@ -71,7 +71,7 @@ const addCourseController = {
 
 const deleteCourseController = {
     async deleteCourseById(req, res, next) {
-
+        console.log("delete course contoller +++", req.body)
         console.log("user credential delete course controller", req.user._id, req.user.role)
         if (req.user.role == "user") {
             return res.status(400).json({
@@ -79,7 +79,7 @@ const deleteCourseController = {
                 reqbody: req.body
             })
         }
-        console.log("add course contoller", req.body)
+        console.log("delete course contoller", req.body)
 
         try {
             if (req.user.role == "admin") {
