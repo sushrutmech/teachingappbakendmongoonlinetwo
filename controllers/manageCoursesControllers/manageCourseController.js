@@ -157,9 +157,9 @@ const addCourseToCart = {
     async addCourseToCart(req, res, next) {
         console.log("add course to cart contoller")
         console.log("add course contoller", req.body)
-        const { courseId, courseName, courseDescription, courseImage } = req.body;
+        const { courseId, userId, courseName, courseDescription, courseImage } = req.body;
         const cart = new Cart({
-            courseId, courseName, courseDescription, courseImage
+            courseId, userId, courseName, courseDescription, courseImage
         })
         try {
 
@@ -214,7 +214,33 @@ const deleteCourseFromCart = {
 
 }
 
+const getCoursesOfCartController = {
+    async getCoursesOfCart(req, res, next) {
+        console.log("get  course from cart contoller")
+        try {
+            await Cart.find({}).select('-__v').then(ress => {
+                console.log("get from course from cart database successfulley ",)
+                res.status(200).json({
+                    success: 'get from course from cart database successfulley...',
+                    cartCourseList: ress
+                })
+            }).catch(ress => {
+                console.log("get from course from cart database failled ", ress)
+                res.status(500).json({
+                    error: 'get from course from cart database unsuccessful error in db ......',
+                })
+            });
+
+        } catch (error) {
+            return res.status(500).json({
+                error: 'erron while getting course list catchBlock ......',
+            })
+        }
+    }
+}
+
 module.exports = {
     getCoursesController, addCourseController,
-    deleteCourseController, updateCourseController, addCourseToCart, deleteCourseFromCart
+    deleteCourseController, updateCourseController, 
+    addCourseToCart, deleteCourseFromCart,getCoursesOfCartController
 };

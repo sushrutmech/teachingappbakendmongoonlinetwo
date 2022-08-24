@@ -10,5 +10,6 @@ router.post('/deleteCourse',auth, manageCourseController.deleteCourseController.
 router.post('/updateCourse',auth, manageCourseController.updateCourseController.updateCourseById)
 router.post('/addCourseToCart',auth, manageCourseController.addCourseToCart.addCourseToCart)
 router.delete('/deleteCourseFromCart',auth, manageCourseController.deleteCourseFromCart.deleteCourseFromCart)
+router.get('/getCourseFromCart',auth, manageCourseController.getCoursesOfCartController.getCoursesOfCart)
 
 module.exports = router;
