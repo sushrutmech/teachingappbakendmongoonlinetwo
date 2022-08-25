@@ -8,8 +8,8 @@ const courseSchema = new Schema({
     courseName: { type: String, required: true },
     courseDescription: { type: String, },
     courseImage:{type:String},
-    courseLike:[{type:Number}],
-    courseDislike:[{type:Number}]
+    courseLike:[String],
+    courseDislike:[String]
 }, { timestamps: true });
 
 const course = mongoose.model('Course', courseSchema, 'courses');

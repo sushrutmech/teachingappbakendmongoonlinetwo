@@ -126,8 +126,10 @@ const updateCourseController = {
                     courseName: req.body.courseName,
                     courseDescription: req.body.courseDescription,
                     courseImage: req.body.courseImage,
-                    courseLike: req.body.courseLike,
-                    courseDislike: req.body.courseDislike
+                    $addToSet: {
+                        courseLike: req.body.courseLike,
+                        courseDislike: req.body.courseDislike
+                    }
                 }).then(ress => {
                     console.log("update course in database successfulley ", ress)
                     res.status(200).json({
@@ -149,7 +151,75 @@ const updateCourseController = {
         }
 
     }
+}
 
+const likeCourse={
+    async updateCourseById(req, res, next) {
+
+        console.log("user credential like course controller", req.user._id, req.user.role)
+        
+        console.log("like  course contoller", req.body)
+
+        try {
+            
+                await Course.findByIdAndUpdate(req.body.courseId, {
+                    $addToSet: {
+                        courseLike: req.body.courseLike,
+                    }
+                }).then(ress => {
+                    console.log("like course in database successfulley ", ress)
+                    res.status(200).json({
+                        success: 'like course in Database successfully ......',
+                    })
+                }).catch(ress => {
+                    console.log("like course in database failled ", ress)
+                    res.status(500).json({
+                        error: 'like course in database unsuccessful error in db ......',
+                    })
+                });        
+
+        } catch (err) {
+            return res.status(500).json({
+                error: 'like course in Database unsuccessful error in db catch ......',
+            })
+        }
+
+    }
+
+}
+
+const disLikeCourse={
+    async updateCourseById(req, res, next) {
+
+        console.log("user credential like course controller", req.user._id, req.user.role)
+        
+        console.log("disLike  course contoller", req.body)
+
+        try {
+            
+                await Course.findByIdAndUpdate(req.body.courseId, {
+                    $addToSet: {
+                        courseDislike: req.body.courseDislike
+                    }
+                }).then(ress => {
+                    console.log("disLike course in database successfulley ", ress)
+                    res.status(200).json({
+                        success: 'dislike course in Database successfully ......',
+                    })
+                }).catch(ress => {
+                    console.log("disLike course in database failled ", ress)
+                    res.status(500).json({
+                        error: 'dislike course in database unsuccessful error in db ......',
+                    })
+                });        
+
+        } catch (err) {
+            return res.status(500).json({
+                error: 'dislike course in Database unsuccessful error in db catch ......',
+            })
+        }
+
+    }
 
 }
 
@@ -241,6 +311,7 @@ const getCoursesOfCartController = {
 
 module.exports = {
     getCoursesController, addCourseController,
-    deleteCourseController, updateCourseController, 
-    addCourseToCart, deleteCourseFromCart,getCoursesOfCartController
+    deleteCourseController, updateCourseController,
+    addCourseToCart, deleteCourseFromCart, getCoursesOfCartController,
+    likeCourse,disLikeCourse
 };
