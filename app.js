@@ -10,6 +10,7 @@ const manageCourseRouter = require("./api/route/manageCourse");
 const commentsRouter = require("./api/route/comment");
 var cors = require('cors');
 
+
 mongoose.set('strictQuery', false);
 mongoose.connect("mongodb+srv://sushrutmahajan:Sushrut123@cluster0.2wvkj.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true });
 const db = mongoose.connection;
