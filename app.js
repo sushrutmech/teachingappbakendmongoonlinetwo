@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const app = express();
-const bodyParser = require('body-Parser');
+// const bodyParser = require('body-Parser');
 var mongoose = require('mongoose');
 const mainRouter = require('./api/route/main');
 const authRouter = require("./api/route/auth");
@@ -20,8 +20,10 @@ db.once('open', () => {
 });
 
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(cors())
 router.get("/", (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
